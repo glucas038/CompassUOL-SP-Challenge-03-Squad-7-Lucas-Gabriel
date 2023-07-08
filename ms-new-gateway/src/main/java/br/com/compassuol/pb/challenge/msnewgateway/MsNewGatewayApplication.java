@@ -1,5 +1,6 @@
 package br.com.compassuol.pb.challenge.msnewgateway;
 
+import com.netflix.discovery.AbstractDiscoveryClientOptionalArgs;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -17,8 +18,7 @@ public class MsNewGatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MsNewGatewayApplication.class, args);
 	}
-
-
+/*
 	@Bean
 	public RouteLocator routeLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
@@ -34,4 +34,6 @@ public class MsNewGatewayApplication {
 						.uri("lb://ms-authorization"))
 				.build();
 	}
+
+ */
 }
