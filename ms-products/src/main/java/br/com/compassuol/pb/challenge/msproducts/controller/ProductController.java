@@ -24,6 +24,11 @@ public class ProductController {
         return new ResponseEntity<>(productService.createProduct(productDTO), HttpStatus.CREATED);
     }
 
+    @GetMapping
+    public String status(){
+        return "Product OK";
+    }
+
     @GetMapping("/")
     public ProductPaginationDTO getAllProducts(
             @RequestParam(value = "page", defaultValue = "0", required = false)

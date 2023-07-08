@@ -1,13 +1,13 @@
 package br.com.compassuol.pb.challenge.msproducts.controller;
 
 import br.com.compassuol.pb.challenge.msproducts.dto.UserDTO;
-import br.com.compassuol.pb.challenge.msproducts.entity.User;
 import br.com.compassuol.pb.challenge.msproducts.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -17,6 +17,16 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping
+    public ResponseEntity<UserDTO> status() {
+        return new ResponseEntity<>(userService.getUserById(1l), HttpStatus.OK);
+    }
+
+    @GetMapping("/oauth")
+    public ResponseEntity<Optional<UserDTO>> findByEmail(@RequestParam String email) {
+        return new ResponseEntity<>(userService.findByEmail(email), HttpStatus.OK);
     }
 
     @PostMapping

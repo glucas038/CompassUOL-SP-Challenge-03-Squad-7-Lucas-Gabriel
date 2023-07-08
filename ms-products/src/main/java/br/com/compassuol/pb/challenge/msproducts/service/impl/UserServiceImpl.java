@@ -38,6 +38,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserDTO> findByEmail(String email) {
+        if (!userRepository.existsByEmail(email)){
+            throw new RuntimeException("Email not exists!.");
+        }
+
+        User user = userRepository.findByEmail(email).get();
+        UserDTO userDTO = mapToDto(user);
+        userDTO.setPassword(user.getPassword());
+
+        return Optional.ofNullable(userDTO);
+    }
+
+    @Override
     public UserDTO createUser(UserDTO userDTO) {
         if (userRepository.existsByEmail(userDTO.getEmail())){
             throw new RuntimeException("Email is already exists!.");
@@ -69,7 +82,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO updateUser(Long userId, UserDTO userDTO) {
         User currentUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not Found"));
-        Optional<List<User>> userList = userRepository.findByEmail(userDTO.getEmail());
+        Optional<List<User>> userList = userRepository.findAllByEmail(userDTO.getEmail());
 
         userList.get().remove(currentUser);
 
