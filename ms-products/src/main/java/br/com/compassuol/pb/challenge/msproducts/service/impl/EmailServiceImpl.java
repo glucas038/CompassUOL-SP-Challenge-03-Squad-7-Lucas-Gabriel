@@ -1,15 +1,16 @@
 package br.com.compassuol.pb.challenge.msproducts.service.impl;
 
-import br.com.compassuol.pb.challenge.msproducts.dto.EmailDTO;
-import br.com.compassuol.pb.challenge.msproducts.dto.ProductDTO;
-import br.com.compassuol.pb.challenge.msproducts.dto.UserDTO;
-//import br.com.compassuol.pb.challenge.msproducts.feignclients.EmailFeignClient;
+import br.com.compassuol.pb.challenge.msproducts.feignclients.EmailFeignClient;
 import br.com.compassuol.pb.challenge.msproducts.model.Email;
+import br.com.compassuol.pb.challenge.msproducts.payload.EmailDTO;
+import br.com.compassuol.pb.challenge.msproducts.payload.ProductDTO;
+import br.com.compassuol.pb.challenge.msproducts.payload.UserDTO;
 import br.com.compassuol.pb.challenge.msproducts.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-/*
+
+
 @Service
 public class EmailServiceImpl implements EmailService {
 
@@ -32,4 +33,4 @@ public class EmailServiceImpl implements EmailService {
     }
 }
 
- */
+

@@ -1,7 +1,8 @@
 package br.com.compassuol.pb.challenge.msproducts.service.impl;
 
-import br.com.compassuol.pb.challenge.msproducts.dto.UserDTO;
-import br.com.compassuol.pb.challenge.msproducts.entity.Category;
+import br.com.compassuol.pb.challenge.msproducts.exception.ProductsAPIException;
+import br.com.compassuol.pb.challenge.msproducts.exception.ResourceNotFoundException;
+import br.com.compassuol.pb.challenge.msproducts.payload.UserDTO;
 import br.com.compassuol.pb.challenge.msproducts.entity.Role;
 import br.com.compassuol.pb.challenge.msproducts.entity.User;
 import br.com.compassuol.pb.challenge.msproducts.repository.RoleRepository;
@@ -9,10 +10,10 @@ import br.com.compassuol.pb.challenge.msproducts.repository.UserRepository;
 import br.com.compassuol.pb.challenge.msproducts.service.UserService;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserDTO> findByEmail(String email) {
         if (!userRepository.existsByEmail(email)){
-            throw new RuntimeException("Email not exists!.");
+            throw new ResourceNotFoundException("User", "email", email);
         }
 
         User user = userRepository.findByEmail(email).get();
@@ -53,13 +54,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         if (userRepository.existsByEmail(userDTO.getEmail())){
-            throw new RuntimeException("Email is already exists!.");
+            throw new ProductsAPIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
         }
 
         Set<Role> roles = userDTO.getRoles().stream()
                 .map(role -> {
                     Role foundRole = roleRepository.findById(role.getId()).orElseThrow(() ->
-                            new RuntimeException("Id role not Found"));
+                            new ResourceNotFoundException("Role", "id", role.getId()));
                     return foundRole;
                 })
                 .collect(Collectors.toSet());
@@ -75,19 +76,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not Found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new
+                ResourceNotFoundException("User", "id", userId));
         return mapToDto(user);
     }
 
     @Override
     public UserDTO updateUser(Long userId, UserDTO userDTO) {
-        User currentUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not Found"));
+        User currentUser = userRepository.findById(userId).orElseThrow(() -> new
+                ResourceNotFoundException("User", "id", userId));
         Optional<List<User>> userList = userRepository.findAllByEmail(userDTO.getEmail());
 
         userList.get().remove(currentUser);
 
         if ((userList.get().size()) >= 1){
-            throw new RuntimeException("Email is already exists!.");
+            throw new ProductsAPIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
         }
 
         User user = mapToEntity(userDTO);

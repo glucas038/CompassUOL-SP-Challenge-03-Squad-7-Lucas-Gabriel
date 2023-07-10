@@ -1,6 +1,6 @@
 package br.com.compassuol.pb.challenge.msproducts.controller;
 
-import br.com.compassuol.pb.challenge.msproducts.dto.UserDTO;
+import br.com.compassuol.pb.challenge.msproducts.payload.UserDTO;
 import br.com.compassuol.pb.challenge.msproducts.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

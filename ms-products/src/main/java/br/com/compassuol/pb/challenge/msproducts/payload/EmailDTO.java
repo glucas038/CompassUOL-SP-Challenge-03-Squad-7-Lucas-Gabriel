@@ -1,4 +1,4 @@
-package br.com.compassuol.pb.challenge.msproducts.dto;
+package br.com.compassuol.pb.challenge.msproducts.payload;
 
 import lombok.Data;
 

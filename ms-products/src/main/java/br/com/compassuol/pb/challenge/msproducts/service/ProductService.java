@@ -1,7 +1,7 @@
 package br.com.compassuol.pb.challenge.msproducts.service;
 
-import br.com.compassuol.pb.challenge.msproducts.dto.ProductDTO;
-import br.com.compassuol.pb.challenge.msproducts.dto.ProductPaginationDTO;
+import br.com.compassuol.pb.challenge.msproducts.payload.ProductDTO;
+import br.com.compassuol.pb.challenge.msproducts.payload.ProductPaginationDTO;
 
 public interface ProductService {
 

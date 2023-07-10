@@ -1,7 +1,6 @@
 package br.com.compassuol.pb.challenge.msproducts.service;
 
-import br.com.compassuol.pb.challenge.msproducts.dto.UserDTO;
-import br.com.compassuol.pb.challenge.msproducts.entity.User;
+import br.com.compassuol.pb.challenge.msproducts.payload.UserDTO;
 
 import java.util.Optional;
 

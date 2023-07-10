@@ -1,4 +1,4 @@
-package br.com.compassuol.pb.challenge.msproducts.dto;
+package br.com.compassuol.pb.challenge.msproducts.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleDTO {
-    private Long id;
-    private String name;
+public class LoginDTO {
+    private String usernameOrEmail;
+    private String password;
 }

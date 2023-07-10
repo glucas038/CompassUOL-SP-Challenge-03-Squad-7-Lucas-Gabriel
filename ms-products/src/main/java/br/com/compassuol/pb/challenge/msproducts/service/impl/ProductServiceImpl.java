@@ -1,8 +1,9 @@
 package br.com.compassuol.pb.challenge.msproducts.service.impl;
 
-import br.com.compassuol.pb.challenge.msproducts.dto.ProductDTO;
-import br.com.compassuol.pb.challenge.msproducts.dto.ProductPaginationDTO;
-import br.com.compassuol.pb.challenge.msproducts.dto.UserDTO;
+import br.com.compassuol.pb.challenge.msproducts.exception.ResourceNotFoundException;
+import br.com.compassuol.pb.challenge.msproducts.payload.ProductDTO;
+import br.com.compassuol.pb.challenge.msproducts.payload.ProductPaginationDTO;
+import br.com.compassuol.pb.challenge.msproducts.payload.UserDTO;
 import br.com.compassuol.pb.challenge.msproducts.entity.Category;
 import br.com.compassuol.pb.challenge.msproducts.entity.Product;
 import br.com.compassuol.pb.challenge.msproducts.repository.CategoryRepository;
@@ -49,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
         Set<Category> categories = productDTO.getCategories().stream()
                 .map(category -> {
                     Category foundCategory = categoryRepository.findById(category.getId()).orElseThrow(() ->
-                            new RuntimeException("Id category not Found"));
+                            new ResourceNotFoundException("Category", "id", category.getId()));
                     return foundCategory;
                 })
                 .collect(Collectors.toSet());
@@ -58,14 +59,14 @@ public class ProductServiceImpl implements ProductService {
         product.setCategories(categories);
 
         Product newProduct = productRepository.save(product);
-        //emailService.sendingEmail(userDTO, productDTO);
+        emailService.sendingEmail(userDTO, productDTO);
         return mapToDTO(newProduct);
     }
 
     @Override
     public ProductDTO getProductById(long productId) {
         Product product = productRepository.findById(productId).orElseThrow(() ->
-                new RuntimeException("Product not Found"));
+                new ResourceNotFoundException("Product", "id", productId));
 
         return mapToDTO(product);
     }
@@ -100,7 +101,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO updateProduct(long productId, ProductDTO productDTO) {
         Product currentProduct = productRepository.findById(productId).orElseThrow(() ->
-                new RuntimeException("Product Not Found"));
+                new ResourceNotFoundException("Product", "id", productId));
 
         Product product = mapToEntity(productDTO);
 
@@ -119,7 +120,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(long productId) {
         Product product = productRepository.findById(productId).orElseThrow(() ->
-                new RuntimeException("Product not Found"));
+                new ResourceNotFoundException("Product", "id", productId));
 
         productRepository.delete(product);
 

@@ -1,7 +1,5 @@
-package br.com.compassuol.pb.challenge.msproducts.dto;
+package br.com.compassuol.pb.challenge.msproducts.payload;
 
-import br.com.compassuol.pb.challenge.msproducts.entity.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
