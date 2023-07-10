@@ -2,10 +2,12 @@ package br.com.compassuol.pb.challenge.msproducts.service.impl;
 
 import br.com.compassuol.pb.challenge.msproducts.dto.ProductDTO;
 import br.com.compassuol.pb.challenge.msproducts.dto.ProductPaginationDTO;
+import br.com.compassuol.pb.challenge.msproducts.dto.UserDTO;
 import br.com.compassuol.pb.challenge.msproducts.entity.Category;
 import br.com.compassuol.pb.challenge.msproducts.entity.Product;
 import br.com.compassuol.pb.challenge.msproducts.repository.CategoryRepository;
 import br.com.compassuol.pb.challenge.msproducts.repository.ProductRepository;
+import br.com.compassuol.pb.challenge.msproducts.service.EmailService;
 import br.com.compassuol.pb.challenge.msproducts.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -23,17 +25,26 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
     private ModelMapper mapper;
+    private EmailService emailService;
 
     public ProductServiceImpl(ProductRepository productRepository,
                               CategoryRepository categoryRepository,
-                              ModelMapper mapper) {
+                              ModelMapper mapper,
+                              EmailService emailService) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.mapper = mapper;
+        this.emailService = emailService;
     }
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
+
+        UserDTO userDTO = new UserDTO();
+        //Preciso ler Token
+        userDTO.setEmail("glucas038@gmail.com");
+        userDTO.setFirstName("First");
+        userDTO.setLastName("Last");
 
         Set<Category> categories = productDTO.getCategories().stream()
                 .map(category -> {
@@ -47,6 +58,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCategories(categories);
 
         Product newProduct = productRepository.save(product);
+        //emailService.sendingEmail(userDTO, productDTO);
         return mapToDTO(newProduct);
     }
 

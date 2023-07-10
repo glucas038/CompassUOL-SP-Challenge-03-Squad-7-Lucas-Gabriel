@@ -29,7 +29,6 @@ public class UserService {
         if(userDTO == null){
             throw new IllegalArgumentException("User not found");
         }
-        //System.out.println(userDTO.getEmail());
         logger.info("User found: " + id);
         return userDTO;
     }

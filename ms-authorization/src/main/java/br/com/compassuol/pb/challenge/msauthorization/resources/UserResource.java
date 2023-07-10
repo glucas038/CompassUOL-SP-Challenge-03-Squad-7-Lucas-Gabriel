@@ -22,10 +22,7 @@ public class UserResource {
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable(value = "userId") Long userId){
         try {
-            System.out.println("Id -> " + userId);
-            System.out.println("1");
             UserDTO userDTO = userService.findById(userId);
-            System.out.println("2");
             return ResponseEntity.ok(userDTO);
         }
         catch (IllegalArgumentException e){
@@ -38,10 +35,7 @@ public class UserResource {
     @GetMapping("/email")
     public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email){
         try {
-            System.out.println("email -> " + email);
-            System.out.println("1");
             UserDTO userDTO = userService.findByEmail(email);
-            System.out.println("2");
             return ResponseEntity.ok(userDTO);
         }
         catch (IllegalArgumentException e){
